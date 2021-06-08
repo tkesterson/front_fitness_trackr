@@ -13,6 +13,7 @@ const Routines = () => {
 
   return (
     <>
+      <h1>All Public Routines.</h1>
       {routines.map((rou) => (
         <div key={rou.id}>
           <h2>

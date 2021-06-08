@@ -12,6 +12,8 @@ import {
   Deleted,
   Added,
   UpdateRoutine,
+  NewActivity,
+  UpdateActivity,
 } from "./components";
 import {
   BrowserRouter as Router,
@@ -26,13 +28,8 @@ const App = () => {
   const [token, setToken] = useState(localStorage.getItem("token") || "");
   const [currentUser, setCurrentUser] = useState(null);
   const [activities, setActivities] = useState([]);
-  const [routine, setRoutine] = useState({
-    id: "",
-    creatorId: "",
-    isPublic: "",
-    name: "",
-    goal: "",
-  });
+  const [routine, setRoutine] = useState({});
+  const [activityToUpdate, setActivityToUpdate] = useState({});
 
   useEffect(async () => {
     if (token) {
@@ -62,7 +59,15 @@ const App = () => {
           </Route>
           <Route path="/MyRoutines">
             {currentUser ? (
-              <MyRoutines {...{ setRoutine, currentUser, token, activities }} />
+              <MyRoutines
+                {...{
+                  setActivityToUpdate,
+                  setRoutine,
+                  currentUser,
+                  token,
+                  activities,
+                }}
+              />
             ) : null}
           </Route>
           <Route path="/SignIn">
@@ -72,7 +77,10 @@ const App = () => {
             <SignUp {...{ setToken, setCurrentUser }} />
           </Route>
           <Route path="/NewRoutine">
-            <NewRoutine {...{ currentUser, token }} />
+            <NewRoutine {...{ token }} />
+          </Route>
+          <Route path="/NewActivity">
+            <NewActivity {...{ token }} />
           </Route>
           <Route path="/Deleted">
             <Deleted />
@@ -82,6 +90,9 @@ const App = () => {
           </Route>
           <Route path="/UpdateRoutine">
             <UpdateRoutine {...{ routine, token }} />
+          </Route>
+          <Route path="/UpdateActivity">
+            <UpdateActivity {...{ activityToUpdate, token }} />
           </Route>
         </Switch>
       </div>

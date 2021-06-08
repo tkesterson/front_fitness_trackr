@@ -1,9 +1,15 @@
 import React, { useEffect, useState } from "react";
 import { fetchDataToken } from "../api";
 import { NavLink, useHistory } from "react-router-dom";
-import { addActivity, deleteActivity } from "../api/Activities";
+import { addActivity, deleteActivityFromRoutine } from "../api/Activities";
 import { deleteRoutine } from "../api/MyRoutines";
-const MyRoutines = ({ setRoutine, currentUser, token, activities }) => {
+const MyRoutines = ({
+  setActivityToUpdate,
+  setRoutine,
+  currentUser,
+  token,
+  activities,
+}) => {
   const [myRoutines, setMyRoutines] = useState([]);
   const [duration, setDuration] = useState("");
   const [count, setCount] = useState("");
@@ -47,7 +53,7 @@ const MyRoutines = ({ setRoutine, currentUser, token, activities }) => {
   function destroyAct(raId, aName, token) {
     const d = confirm(`Delete ${aName}?`);
     if (d) {
-      deleteActivity(raId, token);
+      deleteActivityFromRoutine(raId, token);
       history.push("/Deleted");
     }
   }
@@ -59,7 +65,13 @@ const MyRoutines = ({ setRoutine, currentUser, token, activities }) => {
       history.push("/UpdateRoutine");
     };
   }
-
+  function updateCountDurationMaker(act) {
+    return function updateCountDuration(evt) {
+      evt.preventDefault();
+      setActivityToUpdate(act);
+      history.push("/UpdateActivity");
+    };
+  }
   return (
     <>
       <h1>My Routines</h1>
@@ -81,10 +93,12 @@ const MyRoutines = ({ setRoutine, currentUser, token, activities }) => {
             <>
               <h4 key={act.id} style={{ textIndent: 40 }}>
                 Name: {act.name} | Duration: {act.duration} | Count: {act.count}
-                <button>Update</button>
+                <button onClick={updateCountDurationMaker(act)}>Update</button>
                 <button onClick={() => destroyAct(act.id, act.name, token)}>
                   Delete
                 </button>
+                <br></br>
+                <h5 style={{ textIndent: 60 }}>⫷{act.description}⫸</h5>
               </h4>
             </>
           ))}
@@ -101,7 +115,7 @@ const MyRoutines = ({ setRoutine, currentUser, token, activities }) => {
                 </option>
                 {activities.map((act) => (
                   <option key={act.id} value={act.id}>
-                    {act.name}
+                    {act.name} - {act.description}
                   </option>
                 ))}
               </select>

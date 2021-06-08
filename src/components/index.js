@@ -9,3 +9,5 @@ export { default as NewRoutine } from "./NewRoutine.js";
 export { default as Deleted } from "./Deleted";
 export { default as Added } from "./Added";
 export { default as UpdateRoutine } from "./UpdateRoutine";
+export { default as NewActivity } from "./NewActivity";
+export { default as UpdateActivity } from "./UpdateActivity";

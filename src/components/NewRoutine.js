@@ -1,7 +1,8 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { useHistory } from "react-router";
 
 import { addRoutine } from "../api/MyRoutines";
+
 const NewRoutine = ({ token }) => {
   const [name, setName] = useState("");
   const [goal, setGoal] = useState("");

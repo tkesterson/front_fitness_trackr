@@ -1,9 +1,9 @@
-import React, { useState, useEffect } from "react";
+import React from "react";
 import { NavLink } from "react-router-dom";
 import { clearCurrentUser } from "../api/auth";
 
 const Header = ({ setCurrentUser, currentUser }) => {
-  const handleUserLogout = (event) => {
+  const handleUserLogout = () => {
     clearCurrentUser();
     setCurrentUser(null);
   };

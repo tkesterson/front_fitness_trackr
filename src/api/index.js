@@ -1,4 +1,3 @@
-import axios from "axios";
 const URL = "http://fitnesstrac-kr.herokuapp.com/api/";
 export async function fetchData(route) {
   // console.log("route:", route);

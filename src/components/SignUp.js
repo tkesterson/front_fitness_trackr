@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import { NavLink, useHistory } from "react-router-dom";
 const { register } = require("../api/auth");
 const SignUp = ({ setToken, setCurrentUser }) => {

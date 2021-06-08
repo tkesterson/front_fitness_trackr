@@ -1,13 +1,17 @@
-import React, { useEffect, useState } from "react";
-import { useHistory } from "react-router";
+import React from "react";
 
+import { NavLink } from "react-router-dom";
 const Activities = ({ activities, currentUser }) => {
-  const history = useHistory();
-  function newActivity() {}
-
   return (
     <>
-      {currentUser ? <button></button> : null}
+      <h1>
+        {currentUser ? (
+          <NavLink to="NewActivity">
+            <button>Add New Activity</button>
+          </NavLink>
+        ) : null}
+      </h1>
+
       <h2>Id - Name - Description</h2>
       {activities.map((act) => (
         <div key={act.id}>
