@@ -1,11 +1,10 @@
 const URL = "http://fitnesstrac-kr.herokuapp.com/api/";
 export async function fetchData(route) {
-  // console.log("route:", route);
   try {
     const response = await fetch(`${URL}${route}`);
 
     const data = await response.json();
-    // console.log("fetchData:", data);
+
     return data;
   } catch (error) {
     throw error;
@@ -19,12 +18,17 @@ export async function fetchDataToken(route, token) {
         Authorization: `Bearer ${token}`,
       },
     });
-    // console.log("idxResponse:", response);
 
-    const result = await response.json();
-    console.log(result);
+    let result;
+    try {
+      result = await response.json();
+    } catch (data2) {
+      return [];
+    }
+
     return result;
   } catch (data) {
-    return console.error("console.error:", data);
+    console.error(data);
+    return [];
   }
 }

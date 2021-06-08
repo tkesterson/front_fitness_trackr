@@ -14,7 +14,7 @@ const NewActivity = ({ token }) => {
   const handleSubmit = async (event) => {
     event.preventDefault();
     const response = await createActivity(name, description, token);
-    console.log(response);
+
     if (!response.error) {
       clearInput();
       history.push("/Activities");

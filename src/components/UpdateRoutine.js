@@ -10,7 +10,6 @@ const UpdateRoutine = ({ routine, token }) => {
   const history = useHistory();
 
   useEffect(() => {
-    console.log("token:", token);
     setId(routine.id);
     setName(routine.name);
     setGoal(routine.goal);
@@ -22,10 +21,9 @@ const UpdateRoutine = ({ routine, token }) => {
     setIsPublic(false);
   }
   const handleSubmit = async (event) => {
-    console.log("HStoken:", token);
     event.preventDefault();
     const response = await updateRoutine(id, name, goal, isPublic, token);
-    console.log(response);
+
     if (!response.error) {
       clearInput();
       history.push("/MyRoutines");
@@ -42,7 +40,6 @@ const UpdateRoutine = ({ routine, token }) => {
     setGoal(evt.target.value);
   };
   const pChange = (evt) => {
-    console.log(evt.target.checked);
     setIsPublic(evt.target.checked);
   };
 

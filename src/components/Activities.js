@@ -4,20 +4,20 @@ import { NavLink } from "react-router-dom";
 const Activities = ({ activities, currentUser }) => {
   return (
     <>
-      <h1>
+      <h3>
         {currentUser ? (
           <NavLink to="NewActivity">
             <button>Add New Activity</button>
           </NavLink>
         ) : null}
-      </h1>
+      </h3>
 
-      <h2>Id - Name - Description</h2>
+      <h4>Id - Name - Description</h4>
       {activities.map((act) => (
         <div key={act.id}>
-          <h2>
+          <h5>
             {act.id} - {act.name} - {act.description}
-          </h2>
+          </h5>
         </div>
       ))}
     </>

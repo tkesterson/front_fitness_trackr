@@ -17,7 +17,7 @@ const NewRoutine = ({ token }) => {
   const handleSubmit = async (event) => {
     event.preventDefault();
     const response = await addRoutine(name, goal, isPublic, token);
-    console.log(response);
+
     if (!response.error) {
       clearInput();
       history.push("/MyRoutines");

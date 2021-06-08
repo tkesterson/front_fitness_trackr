@@ -16,7 +16,7 @@ export async function addRoutine(name, goal, isPublic, token) {
       }
     );
     const result = await response.json();
-    console.log(result);
+
     return result;
   } catch (data) {
     return console.error(data);
@@ -36,7 +36,7 @@ export async function deleteRoutine(rId, token) {
       }
     );
     const result = await response.json();
-    console.log(result);
+
     return result;
   } catch (data) {
     return console.error(data);
@@ -62,7 +62,7 @@ export async function updateRoutine(rId, name, goal, isPublic, token) {
       }
     );
     const result = await response.json();
-    console.log(result);
+
     return result;
   } catch (data) {
     return console.error(data);

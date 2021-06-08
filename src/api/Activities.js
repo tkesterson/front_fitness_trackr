@@ -15,14 +15,13 @@ export async function addActivity(rId, activityId, count, duration) {
       }
     );
     const result = await response.json();
-    console.log(result);
+
     return result;
   } catch (data) {
     return console.error(data);
   }
 }
 export async function deleteActivityFromRoutine(raId, token) {
-  console.log(token);
   try {
     const response = await fetch(
       `http://fitnesstrac-kr.herokuapp.com/api/routine_activities/${raId}`,
@@ -35,7 +34,7 @@ export async function deleteActivityFromRoutine(raId, token) {
       }
     );
     const result = await response.json();
-    console.log("deleteResult:", result);
+
     return result;
   } catch (data) {
     return console.error(data);
@@ -58,7 +57,7 @@ export async function createActivity(name, description, token) {
       }
     );
     const result = await response.json();
-    console.log(result);
+
     return result;
   } catch (data) {
     return console.error(data);
@@ -70,23 +69,25 @@ export async function UpdateActivityCountDuration(
   duration,
   token
 ) {
+  console.log(count, duration);
   try {
     const response = await fetch(
-      `http://fitnesstrac-kr.herokuapp.com/api/api/routine_activities/${raId}`,
+      `http://fitnesstrac-kr.herokuapp.com/api/routine_activities/${raId}`,
       {
         method: "PATCH",
         headers: {
           "Content-Type": "application/json",
           Authorization: `Bearer ${token}`,
-          body: JSON.stringify({
-            count,
-            duration,
-          }),
         },
+        body: JSON.stringify({
+          count,
+          duration,
+        }),
       }
     );
     const result = await response.json();
-    console.log(result);
+
+    return result;
   } catch (data) {
     return console.error(data);
   }

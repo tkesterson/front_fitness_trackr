@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { Fragment, useEffect, useState } from "react";
 import { fetchDataToken } from "../api";
 import { NavLink, useHistory } from "react-router-dom";
 import { addActivity, deleteActivityFromRoutine } from "../api/Activities";
@@ -14,13 +14,12 @@ const MyRoutines = ({
   const [duration, setDuration] = useState("");
   const [count, setCount] = useState("");
   const [activity, setActivity] = useState("");
-  console.log(myRoutines);
+
   const history = useHistory();
-  // console.log("currentUser:", currentUser);
 
   useEffect(async () => {
     const data = await fetchDataToken(`users/${currentUser}/routines`, token);
-    console.log("data:", data);
+
     if (data) {
       setMyRoutines(data);
     }
@@ -38,10 +37,47 @@ const MyRoutines = ({
   function addActivityToRoutineMaker(rId) {
     return async function addActivityToRoutine(evt) {
       evt.preventDefault();
-      const purple = await addActivity(rId, activity, duration, count);
-      console.log(purple);
-      history.push("/Added");
+      const response = await addActivity(rId, activity, duration, count);
+      const act = activities.find((act) => act.id === response.activityId);
+      const addedActivity = { ...act };
+      addedActivity.duration = response.duration;
+      addedActivity.count = response.count;
+      addedActivity.routineId = response.routineId;
+      addedActivity.routineActivityId = response.id;
+
+      const newMyRout = myRoutines.map((rout) => {
+        if (rout.id === addedActivity.routineId) {
+          rout.activities.push(addedActivity);
+        }
+        return rout;
+      });
+      setMyRoutines(newMyRout);
     };
+  }
+  async function destroyAct(raId, aName, token) {
+    const d = confirm(`Delete ${aName}?`);
+    if (d) {
+      const response = await deleteActivityFromRoutine(raId, token);
+      const act = activities.find((act) => act.id === response.activityId);
+      const deletedActivity = { ...act };
+
+      deletedActivity.duration = response.duration;
+      deletedActivity.count = response.count;
+      deletedActivity.routineId = response.routineId;
+      deletedActivity.routineActivityId = response.id;
+
+      const newMyRout = myRoutines.map((rout) => {
+        if (rout.id === deletedActivity.routineId) {
+          rout.activities = rout.activities.filter(
+            (act) => act.id !== deletedActivity.id
+          );
+        }
+
+        return rout;
+      });
+
+      setMyRoutines(newMyRout);
+    }
   }
   function destroyRoutine(rId, rName, token) {
     const d = confirm(`Delete ${rName}?`);
@@ -50,16 +86,9 @@ const MyRoutines = ({
       history.push("/Deleted");
     }
   }
-  function destroyAct(raId, aName, token) {
-    const d = confirm(`Delete ${aName}?`);
-    if (d) {
-      deleteActivityFromRoutine(raId, token);
-      history.push("/Deleted");
-    }
-  }
+
   function toUpdateRoutineMaker(rId) {
     return function toUpdateRoutine(evt) {
-      console.log(rId);
       evt.preventDefault();
       setRoutine(rId);
       history.push("/UpdateRoutine");
@@ -74,33 +103,38 @@ const MyRoutines = ({
   }
   return (
     <>
-      <h1>My Routines</h1>
+      <h2>My Routines</h2>
       <NavLink to="NewRoutine">
         <button>Add New Routine</button>
       </NavLink>
 
       {myRoutines.map((rou) => (
         <div key={rou.id}>
-          <h2>
+          <h3>
             Name: {rou.name} | Goal: {rou.goal} | Creator: {rou.creatorName}
             <button type="button" onClick={toUpdateRoutineMaker(rou)}>
               Update {rou.name}
             </button>
-          </h2>
+          </h3>
 
-          <h3 style={{ textIndent: 20 }}>Included Activities:</h3>
+          <h4 style={{ textIndent: 20 }}>Included Activities:</h4>
           {rou.activities.map((act) => (
-            <>
-              <h4 key={act.id} style={{ textIndent: 40 }}>
+            <Fragment key={act.id}>
+              <h4 style={{ textIndent: 40 }}>
                 Name: {act.name} | Duration: {act.duration} | Count: {act.count}
                 <button onClick={updateCountDurationMaker(act)}>Update</button>
-                <button onClick={() => destroyAct(act.id, act.name, token)}>
+                <button
+                  onClick={() =>
+                    destroyAct(act.routineActivityId, act.name, token)
+                  }
+                >
                   Delete
                 </button>
-                <br></br>
-                <h5 style={{ textIndent: 60 }}>⫷{act.description}⫸</h5>
               </h4>
-            </>
+              <h5 key={act.name} style={{ textIndent: 60 }}>
+                ⫷{act.description}⫸
+              </h5>
+            </Fragment>
           ))}
           <form onSubmit={addActivityToRoutineMaker(rou.id)}>
             <label>
@@ -120,9 +154,8 @@ const MyRoutines = ({
                 ))}
               </select>
             </label>
-
             <label>
-              Duration
+              Duration:
               <input
                 type="number"
                 style={{ width: "50px" }}
@@ -130,7 +163,7 @@ const MyRoutines = ({
               ></input>
             </label>
             <label>
-              Count
+              Count:
               <input
                 type="number"
                 style={{ width: "50px" }}
@@ -140,7 +173,6 @@ const MyRoutines = ({
             <button>Add Activity to {rou.name}</button>
           </form>
 
-          <br></br>
           <button
             type="button"
             onClick={() => destroyRoutine(rou.id, rou.name, token)}

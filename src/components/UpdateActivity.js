@@ -3,35 +3,30 @@ import { useHistory } from "react-router";
 
 import { UpdateActivityCountDuration } from "../api/Activities";
 const UpdateActivity = ({ activityToUpdate, token }) => {
-  const [id, setId] = useState("");
+  const [raid, setRaid] = useState("");
   const [count, setCount] = useState("");
   const [duration, setDuration] = useState("");
 
   const history = useHistory();
 
   useEffect(() => {
-    console.log("activity:", activityToUpdate);
-    console.log("token:", token);
-    setId(activityToUpdate.id);
+    setRaid(activityToUpdate.routineActivityId);
     setCount(activityToUpdate.count);
     setDuration(activityToUpdate.duration);
   }, []);
   function clearInput() {
     setCount("");
     setDuration("");
-    setIsPublic(false);
   }
   const handleSubmit = async (event) => {
-    console.log("HStoken:", token);
     event.preventDefault();
     const response = await UpdateActivityCountDuration(
-      id,
-      name,
-      goal,
-      isPublic,
+      raid,
+      count,
+      duration,
       token
     );
-    console.log(response);
+
     if (!response.error) {
       clearInput();
       history.push("/MyRoutines");
