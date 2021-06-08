@@ -43,7 +43,7 @@ export async function deleteActivityFromRoutine(raId, token) {
 export async function createActivity(name, description, token) {
   try {
     const response = await fetch(
-      "http://fitnesstrac-kr.herokuapp.com/api/activities",
+      "https://fitnesstrac-kr.herokuapp.com/api/activities",
       {
         method: "POST",
         headers: {
@@ -72,7 +72,7 @@ export async function UpdateActivityCountDuration(
   console.log(count, duration);
   try {
     const response = await fetch(
-      `http://fitnesstrac-kr.herokuapp.com/api/routine_activities/${raId}`,
+      `https://fitnesstrac-kr.herokuapp.com/api/routine_activities/${raId}`,
       {
         method: "PATCH",
         headers: {

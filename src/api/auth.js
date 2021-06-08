@@ -1,5 +1,5 @@
 export function register(username, password) {
-  return fetch("http://fitnesstrac-kr.herokuapp.com/api/users/register", {
+  return fetch("https://fitnesstrac-kr.herokuapp.com/api/users/register", {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
@@ -18,7 +18,7 @@ export function register(username, password) {
     });
 }
 export function signIn(username, password) {
-  return fetch("http://fitnesstrac-kr.herokuapp.com/api/users/login", {
+  return fetch("https://fitnesstrac-kr.herokuapp.com/api/users/login", {
     method: "POST",
     headers: {
       "Content-Type": "application/json",

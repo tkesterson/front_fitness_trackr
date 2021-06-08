@@ -1,7 +1,7 @@
 export async function addRoutine(name, goal, isPublic, token) {
   try {
     const response = await fetch(
-      "http://fitnesstrac-kr.herokuapp.com/api/routines",
+      "https://fitnesstrac-kr.herokuapp.com/api/routines",
       {
         method: "POST",
         headers: {
@@ -26,7 +26,7 @@ export async function addRoutine(name, goal, isPublic, token) {
 export async function deleteRoutine(rId, token) {
   try {
     const response = await fetch(
-      `http://fitnesstrac-kr.herokuapp.com/api/routines/${rId}`,
+      `https://fitnesstrac-kr.herokuapp.com/api/routines/${rId}`,
       {
         method: "DELETE",
         headers: {
@@ -47,7 +47,7 @@ export async function updateRoutine(rId, name, goal, isPublic, token) {
     debugger;
     console.log(rId, name, goal, isPublic, token);
     const response = await fetch(
-      `http://fitnesstrac-kr.herokuapp.com/api/routines/${rId}`,
+      `https://fitnesstrac-kr.herokuapp.com/api/routines/${rId}`,
       {
         method: "PATCH",
         headers: {

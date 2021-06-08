@@ -1,5 +1,5 @@
 export async function getMe(token) {
-  return fetch("http://fitnesstrac-kr.herokuapp.com/api/users/me", {
+  return fetch("https://fitnesstrac-kr.herokuapp.com/api/users/me", {
     headers: {
       "Content-Type": "application/json",
       Authorization: `Bearer ${token}`,
