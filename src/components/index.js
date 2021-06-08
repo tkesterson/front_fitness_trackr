@@ -1,0 +1,11 @@
+export { default as Header } from "./Header";
+export { default as Routines } from "./Routines";
+export { default as Activities } from "./Activities";
+export { default as MyRoutines } from "./MyRoutines";
+export { default as SignIn } from "./SignIn";
+export { default as SignUp } from "./SignUp";
+export { default as Home } from "./Home";
+export { default as NewRoutine } from "./NewRoutine.js";
+export { default as Deleted } from "./Deleted";
+export { default as Added } from "./Added";
+export { default as UpdateRoutine } from "./UpdateRoutine";
